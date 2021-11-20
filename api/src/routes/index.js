@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Recipe } = require('../db.js');
+const { Recipe, Diet_type } = require('../db.js');
 const crypto  = require('crypto');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -18,6 +18,53 @@ router.use(morgan('dev'));
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+
+const tiposDeDietas = [
+    {
+        id: 1,
+        name : 'Gluten Free'
+    },
+    {
+        id: 2,
+        name : 'Ketogenic'
+    },
+    {
+        id: 3,
+        name : 'Vegetarian'
+    },
+    {
+        id: 4,
+        name : 'Lacto-Vegetarian'
+    },
+    {
+        id: 5,
+        name : 'Ovo-Vegetarian'
+    },
+    {
+        id: 6,
+        name : 'Vegan'
+    },
+    {
+        id: 7,
+        name : 'Pescetarian'
+    },
+    {
+        id: 8,
+        name : 'Paleo'
+    },
+    {
+        id: 9,
+        name : 'Primal'
+    },
+    {
+        id: 10,
+        name : 'Low FODMAP'
+    },
+    {
+        id: 11,
+        name : 'Whole30'
+    },
+]
 
 router.get('/', async function(req,res){
     res.send(200);
@@ -38,10 +85,10 @@ var getDatabaseInfo = async function(name){ //busca las recetas que matcheen con
 router.get('/recipes', async function(req,res){
 
     const {name} = req.query;
-    if(!name) return res.send('Se necesita un name en el query');
+    // if(!name) return res.send('Se necesita un name en el query');
+    console.log('name del query: ' ,name)
     try {
-    var getApiCall = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${name}
-  &addRecipeInformation=true&apiKey=${YOUR_API_KEY}`);
+    var getApiCall = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${name|| ''}&number=5&addRecipeInformation=true&apiKey=${YOUR_API_KEY}`);
   
   let array = Object.values(getApiCall.data.results);
 
@@ -58,13 +105,13 @@ router.get('/recipes', async function(req,res){
     }
 }));
 
-    let getAllInfo = async function(){ //concatena la información de la db con la de la api;
+     //concatena la información de la db con la de la api;
         let apiInfo = recetas;
         let dbInfo = await getDatabaseInfo(name);
         const info = dbInfo.concat(apiInfo);
 
     info ? res.json(info) : res.status(401).send('no se encontró la receta');
-    }();
+    
 }
 catch(e){
     console.log(e);
@@ -95,9 +142,31 @@ router.get('/recipes/:id', async function(req,res){
             healthScore : array.healthScore,
             instructions : array.instructions
         }
-
+    receta &&console.log(receta)
+    !receta && console.log('no se encontro la receta');
     return res.json(receta);
 });
+
+router.get('/types', async (req,res)=>{
+    // let types = Diet_type.findAll();
+    
+    // if(!types){ 
+    //     Diet_type.bulkCreate(tiposDeDietas).then((tipos)=> res.json(tipos))
+    //     .then((tipos) => res.json(tipos))
+    // }
+//     if (!types){
+    for(let i = 0; i<tiposDeDietas.length;i++){
+        let ele = tiposDeDietas[i];
+    await Diet_type.create({
+        id: ele.id,
+        name: ele.name
+    })}
+// }
+    types = await Diet_type.findAll();
+    
+    return res.json(types);
+
+})
 
 
 router.post('/recipes', async (req,res)=>{
