@@ -6,7 +6,7 @@ const styles = {
     div : {
         display : 'flex',
         justifyContent : 'space-between',
-        alignContent: 'center',
+        alignContent: 'flex-end',
         backgroundColor : '#CCC',
         borderBottom : 'solid 2px #FA0',
         borderRadius : '4px',
@@ -29,12 +29,19 @@ const styles = {
 
 const Nav = function(){
     return(
-        <Link to={'/'} style={styles.link}>
         <div style={styles.div}>
+        <Link to={'/home'} style={styles.link}>
             <h2 style={styles.title}>Henry Food App</h2>
-            <img src={spatula} alt='logo' style={styles.img}></img>
-        </div>
         </Link>
+
+            <Link to='/form' style={styles.link}>
+            <h3 style={styles.title}>Agregar receta</h3>
+            </Link>
+            <img src={spatula} alt='logo' style={styles.img}></img>
+            
+            
+        </div>
+        
     )
 }
 

@@ -6,11 +6,14 @@ const crypto  = require('crypto');
 const  axios  = require('axios');
 const morgan = require('morgan');
 
+
 const {Op, UUID, DataTypes, Sequelize} = require('sequelize');
+const { URLSearchParams } = require('url');
 const {
     DB_USER, YOUR_API_KEY, DB_HOST,
   } = process.env;
 
+  const apiKeys = ['740456301aa641dea81fc8a540530539', '4e84d07ca9e34723a06d3748b52db7d1', YOUR_API_KEY ]
 
 const router = Router();
 
@@ -83,12 +86,14 @@ var getDatabaseInfo = async function(name){ //busca las recetas que matcheen con
 
 
 router.get('/recipes', async function(req,res){
+    
 
-    const {name} = req.query;
-    // if(!name) return res.send('Se necesita un name en el query');
-    console.log('name del query: ' ,name)
     try {
-    var getApiCall = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${name|| ''}&number=5&addRecipeInformation=true&apiKey=${YOUR_API_KEY}`);
+    const {name, title, query} = req.query;
+
+
+    console.log('query: ' ,req.query)
+    var getApiCall = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${name|| ''}&number=50&addRecipeInformation=true&apiKey=${apiKeys[1]}`);
   
   let array = Object.values(getApiCall.data.results);
 
@@ -101,7 +106,8 @@ router.get('/recipes', async function(req,res){
         image: i.image,
         dishTypes: i.dishTypes,
         healthScore : i.healthScore,
-        instructions : i.instructions
+        instructions : i.instructions,
+        score : i.spoonacularScore
     }
 }));
 
@@ -140,10 +146,9 @@ router.get('/recipes/:id', async function(req,res){
             image: array.image,
             dishTypes: array.dishTypes,
             healthScore : array.healthScore,
-            instructions : array.instructions
+            instructions : array.instructions,
+            score : array.spoonacularScore
         }
-    receta &&console.log(receta)
-    !receta && console.log('no se encontro la receta');
     return res.json(receta);
 });
 
@@ -170,7 +175,7 @@ router.get('/types', async (req,res)=>{
 
 
 router.post('/recipes', async (req,res)=>{
-    const {name, summary,healthScore, diets, image, dishTypes, instructions} = req.query;
+    const {name, summary,healthScore, diets, image, dishTypes, instructions, score} = req.query;
     if(!name || !summary) return res.send('Se necesita un name y un summary en el query');
 
     let recipe;

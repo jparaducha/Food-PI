@@ -32,6 +32,9 @@ module.exports = (sequelize) =>{
     },
     instructions : {
       type: DataTypes.TEXT
+    },
+    score : {
+      type: DataTypes.INTEGER
     }
   });
 };

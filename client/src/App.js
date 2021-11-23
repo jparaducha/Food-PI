@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Cards from './components/Cards';
 import Recipes from './components/Recipes';
 import InfoRecipe from './components/InfoRecipe';
+import Form from './components/Form';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path = '/home' element = {<Home/>}/>
       <Route path= '/recipes' element= {<Recipes/>}/>
       <Route path= '/recipes/:id' element= {<InfoRecipe/>}/>
+      <Route path= '/form' element= {<Form/>}/>
       </Routes>
       </BrowserRouter>
   );
