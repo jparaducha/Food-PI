@@ -1,26 +1,51 @@
 import React from 'react';
 import homeLogo from './home-logo.png';
 import {Link} from 'react-router-dom';
+import food1 from './food1.jpg';
+import food2 from './food2.jpg';
+import food3 from './food3.jpg';
+import food4 from './food4.jpg';
+import food5 from './food5.jpg';
+import food6 from './food6.jpg';
+import food7 from './food7.jpg';
+import food8 from './food8.jpg';
+import food9 from './food9.jpg';
+import food10 from './food10.jpg';
+
+
+
+
+
+const Landing = function(){
+
+    var imgs = [food1, food2, food3 ,food4, food5, food6, food7, food8, food9 ,food10]
+
 
 const styles = {
     div : {
-        minWidth : '100vw',
+        Width : '100vw',
         minHeight : '100vh',
         display: 'flex',
         justifyContent : 'center',
-        alignItems : 'center'
+        alignItems : 'center',
+        backgroundImage : `url(${imgs[Math.floor(Math.random() * 10)]})`,
+        backgroundRepeat : 'no-repeat',
+        backgroundAttachment : 'fixed',
+        backgroundSize : 'cover'
     },
     wrapper : {
         maxWidth: '80vw',
         display: 'grid',
         gridTemplateColumns : 'repeat(3,1fr)',
-        griAutoRow : 'minmax(200px, auto)',
+        gridAutoRow : 'minmax(200px, auto)',
         gridGap : '10px'
     },
     one : {
         fontFamily: 'Courier New',
         gridColumn : '1/3',
-        gridRow : '1'
+        gridRow : '1',
+        color : '#FC0',
+        textShadow : '2px 2px 0 black'
     },
     two : {
         fontFamily : 'Courier New',
@@ -40,7 +65,6 @@ const styles = {
     }
 }
 
-const Landing = function(){
     return(
         <div style={styles.div}>
         <div style={styles.wrapper}>

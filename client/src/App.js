@@ -3,7 +3,7 @@ import {Routes, Route, BrowserRouter } from 'react-router-dom';
 import Landing from './components/Landing';
 import Home from './components/Home';
 // import Recipes from './components/recipes/Recipes'
-import Cards from './components/Cards';
+// import Cards from './components/Cards';
 import Recipes from './components/Recipes';
 import InfoRecipe from './components/InfoRecipe';
 import Form from './components/Form';

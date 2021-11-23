@@ -1,4 +1,4 @@
-import React, {useState , useEffect} from 'react';
+import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Nav from './Nav';
 import { useParams } from 'react-router';
@@ -23,18 +23,19 @@ export default function InfoRecipe(){
             justifyContent : 'center',
             flexFlow : 'column',
             alignItems : 'center',
-            backgroundColor: 'RGBA(153,153,153,.4)',
+            backgroundColor: 'RGBA(255,255,255,.6)',
             border: '3px solid lightblue',
             borderRadius: '10px',
             maxWidth : '75vw',
             margin: '10px',
             padding: '15px',
             fontFamily : 'arial',
-            color: '#22F'
+            color: '#4273CB',
+            textShadow : '0.2px 0.2px 0px black'
         },
         div1 : {
             Width : '93vw',
-            backgroundImage : 'url('+'https://previews.123rf.com/images/jagcz/jagcz1702/jagcz170200134/72504512-comida-asi%C3%A1tica-servido-en-blanco-mesa-de-madera-vista-desde-arriba-el-espacio-para-el-texto-juego-d.jpg' + ')',
+            backgroundImage : 'url(https://previews.123rf.com/images/jagcz/jagcz1702/jagcz170200134/72504512-comida-asi%C3%A1tica-servido-en-blanco-mesa-de-madera-vista-desde-arriba-el-espacio-para-el-texto-juego-d.jpg)',
             // backgroundColor : '#FC6',
             display : 'flex',
             justifyContent : 'center',
@@ -53,9 +54,10 @@ export default function InfoRecipe(){
         <div style={styles.div1}>
         <div style={styles.div}>
         <h1 style={{fontFamily:'Courier New'}}>{recipe.name? recipe.name : 'cargando...'}</h1>
-        <img style={styles.img}src={recipe.image || 'https://bitsofco.de/content/images/2018/12/Screenshot-2018-12-16-at-21.06.29.png'}/>
-        {recipe.healthScore? <h3>Puntaje de salud: {recipe.healthScore}</h3>:null}
+        <img style={styles.img}src={recipe.image || 'https://bitsofco.de/content/images/2018/12/Screenshot-2018-12-16-at-21.06.29.png'} alt='recipe'/>
+        {recipe.healthScore!==undefined? <h3>Puntaje de salud: {recipe.healthScore}</h3>:null}
         {recipe.score? <h3>Puntaje Spoonacular: {recipe.score}</h3>:null}
+        
 
         {recipe.summary? <h4 >Resumen:<div dangerouslySetInnerHTML={{ __html: recipe.summary }}/></h4>: null}&nbsp;
         {recipe.instructions ? <h4 >Pasos: <div dangerouslySetInnerHTML={{ __html: recipe.instructions}}/></h4>: null}

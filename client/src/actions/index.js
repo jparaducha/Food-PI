@@ -61,12 +61,15 @@ export const orderFunctionScore = (payload)=>{
 }
 
 export const addRecipe = (payload)=>{
-    console.log('addRecipe!!');
-    return async function(){
-        let url = `http//localhost:3001/recipes`;
-        var json = await axios.post(url, payload);
-        console.log('hace un post con axios en:', url, ' y con payload: ', payload);
-        return json;
+    console.log('addRecipe en línea 64 actions');
+    return async function(dispatch){
+        console.log('intenta hacer le post linea 66 actions')
+        var json = await axios.post(`http//localhost:3001/recipes`, payload);
+
+        console.log('línea 69 actions\nhace un post con axios en:http//localhost:3001/recipes y con payload: ', payload);
+
+
+        return dispatch({type: ADD_RECIPE, payload : json.data});
     }
 }
 

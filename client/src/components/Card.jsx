@@ -15,7 +15,9 @@ function Card({id, name, image, diets, summary, dishTypes, healthScore}){
             margin : '10px'
         },
         img : {
-            width : '23vw'
+            width : '23vw',
+            border : '1px solid gray',
+            borderRadius : '5px'
         },
         hScore : {
             fontFamily : 'Helvetica',
@@ -25,11 +27,11 @@ function Card({id, name, image, diets, summary, dishTypes, healthScore}){
     }
     return (
         <div key = {id} style={styles.div}>
-            <Link to={`/recipes/${id}`}>
-            <h4 style={{textDecoration:'none', color : '#5384DC'}}>{name}</h4>
+            <Link to={`/recipes/${id}`} style={{textDecoration:'none'}}>
+            <h4 style={{ color : '#5384DC'}}>{name}</h4>
             </Link>
             <img src={image || 'https://bitsofco.de/content/images/2018/12/Screenshot-2018-12-16-at-21.06.29.png'} style ={styles.img} alt= 'not found'></img> 
-            <h4 style={styles.hScore}>Puntaje de salud {healthScore}</h4>
+            <h4 style={styles.hScore}>Puntaje de salud  {healthScore}</h4>
             <p>{diets.length?  <h5>Tipos de dietas</h5>:null}
             
             {diets?<ul>{ diets.map(i=> <li>{i[0].toUpperCase()+i.slice(1,)}</li>)}</ul>: null}

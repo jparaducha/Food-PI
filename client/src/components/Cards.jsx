@@ -3,13 +3,13 @@ import Card from './Card';
 import { useSelector, useDispatch } from 'react-redux';
 import { getByName } from '../actions';
 import { filterByType, orderFunction, orderFunctionDesc, orderFunctionScore } from '../actions';
-import axios from 'axios';
+// import axios from 'axios';
 import prevButtn from './prevButtn.png';
 import nextButtn from './nextButtn.png';
 
-const {
-  DB_USER, DB_PASSWORD, DB_HOST,
-} = process.env;
+// const {
+//   DB_USER, DB_PASSWORD, DB_HOST,
+// } = process.env;
 
 export default  function Cards(){
     const dispatch = useDispatch();
@@ -43,7 +43,7 @@ export default  function Cards(){
       flexWrap : 'wrap',
       justifyContent : 'space-around',
       borderRadius: '2px',
-      backgroundImage : 'url(' + 'https://previews.123rf.com/images/kucherav/kucherav1703/kucherav170300105/73010705-marco-de-diferentes-alimentos-cocinados-a-la-parrilla-en-la-mesa-de-madera-en-un-d%C3%ADa-soleado-bistec-.jpg' + ')',
+      backgroundImage : 'url(https://previews.123rf.com/images/kucherav/kucherav1703/kucherav170300105/73010705-marco-de-diferentes-alimentos-cocinados-a-la-parrilla-en-la-mesa-de-madera-en-un-d%C3%ADa-soleado-bistec-.jpg)',
       backgroundRepeat : 'no-repeat',
       backgroundAttachment : 'fixed'
     },
@@ -76,11 +76,10 @@ export default  function Cards(){
 }
 useEffect(()=>{
   setFiltrados(filteredRecipes())
-},)
+},[filteredRecipes])
 
     const onSearchChange = (event) => {
         setSearch(event.target.value);
-       console.log(search)
      }
      const onSearchSubmit = (event) => {
        
@@ -91,7 +90,7 @@ useEffect(()=>{
          console.log('despacha getbyname : ', search, '\n línea 47 Cards.jsx');
        setCurrentPage(0); 
        setSearchSubmit(search);
-       setSearch("");
+      //  setSearch("");
      }
 
 
@@ -141,9 +140,9 @@ useEffect(()=>{
         <>
         <div styles={styles.global}>
             <div style={styles.divControles}>
-              <input type="text" placeholder="Buscar receta" onChange={(e) => onSearchChange(e)} />
+              <input type="text" placeholder="Buscar receta" onChange={(e) => onSearchChange(e)}  />
               <button onClick={(e) => onSearchSubmit(e)}>Buscar</button>
-              <form onSubmit={(e)=> asdsa(e)} value={diet}>
+              <form onSubmit={(e)=> asdsa(e)} >
                 <label for="dietas">Filtrar por tipo:</label>
                   <select id="dietas" name="dietas"  onChange={(e)=>handleDietChange(e)}>
                     <option value='All'>All</option>
@@ -167,11 +166,11 @@ useEffect(()=>{
               <input type='button' value='ordenar Z-A' onClick = {(e)=> orderHandlerDesc(e)}/>
             </div>
             <div style={styles.divPaginado}>
-              {actualPage!=1?<img src={prevButtn} style={{maxHeight:'8vh'}} onClick={() => prevPage()}/>: null}
+              {actualPage!==1?<img src={prevButtn} style={{maxHeight:'8vh'}} onClick={() => prevPage()} alt='control página anterior'/>: null}
               &nbsp;
               <p>{actualPage}</p>
               &nbsp;
-              {(recipes.length)/9>actualPage ?<img src={nextButtn} style={{maxHeight:'8vh'}} onClick={() => nextPage()}/>:null}
+              {(recipes.length)/9>actualPage ?<img src={nextButtn} style={{maxHeight:'8vh'}} onClick={() => nextPage()} alt='control página siguiente'/>:null}
             </div>
 
             <div style={styles.cards}>
@@ -180,16 +179,16 @@ useEffect(()=>{
                        <Card id={r.id} name={r.name} image ={r.image} healthScore={r.healthScore} diets={r.diets}/>
                       )
                                                 })
-              :null}
+              :<h1 style={{height : '60vh', color: 'white', display: 'flex', alignItems:'center', textShadow:'2px 2px 0 black'}}>No se encontraron recetas</h1>}
             </div>
 
 
             <div style={styles.divPaginado}>
-              {actualPage!=1?<img src={prevButtn} style={{maxHeight:'8vh'}} onClick={() => prevPage()}/>: null}
+              {actualPage!==1?<img src={prevButtn} style={{maxHeight:'8vh'}} onClick={() => prevPage()} alt='control página anterior'/>: null}
               &nbsp;
               <p>{actualPage}</p>
               &nbsp;
-              {(recipes.length)/9>actualPage ?<img src={nextButtn} style={{maxHeight:'8vh'}} onClick={() => nextPage()}/>:null}
+              {(recipes.length)/9>actualPage ?<img src={nextButtn} style={{maxHeight:'8vh'}} onClick={() => nextPage()} alt='control página siguiente'/>:null}
             </div>
         </div>
         </>

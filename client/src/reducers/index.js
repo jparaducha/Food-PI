@@ -22,7 +22,8 @@ export default function rootReducer(state=InitialState, { type, payload }){
                         return{
                             ...state,
                             recipes : payload,
-                            allRecipes : payload
+                            allRecipes : payload,
+                            details : {}
                         }
         case FILTER_BY_TYPE: //recibe la acción filter y  actualiza el estado recipes con las recetas filtradas;
                         const recetas = state.allRecipes;
@@ -41,13 +42,15 @@ export default function rootReducer(state=InitialState, { type, payload }){
                         console.log('línea 41 reducer\nnueva recipes en redux va a ser:', filtered)
                         return {
                             ...state,
-                            recipes : filtered
+                            recipes : filtered,
+                            details : {}
                         }
         case GET_BY_NAME: // devuelve la lista de recetas obtenidas de la db;
                         return {
                             ...state,
                             recipes : payload,
-                            allRecipes : payload
+                            allRecipes : payload,
+                            details : {}
                         }
         case ADD_RECIPE:
                         return {

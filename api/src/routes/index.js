@@ -93,7 +93,7 @@ router.get('/recipes', async function(req,res){
 
 
     console.log('query: ' ,req.query)
-    var getApiCall = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${name|| ''}&number=50&addRecipeInformation=true&apiKey=${apiKeys[1]}`);
+    var getApiCall = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${name|| ''}&number=50&addRecipeInformation=true&apiKey=${apiKeys[0]}`);
   
   let array = Object.values(getApiCall.data.results);
 
