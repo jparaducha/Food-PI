@@ -31,6 +31,13 @@ export default  function Cards(){
       border: '15px solid #FCC',
       backgroundColor : 'RGBA(255,5,5,.2)'
     },
+    botones:{
+      backgroundColor: 'white',
+      border: '1px solid black',
+      fontFamily:'Helvetica',
+      margin: '3px',
+      borderRadius: '3px'
+    },
     divPaginado : {
       display: 'flex',
       justifyContent: 'center',
@@ -52,6 +59,7 @@ export default  function Cards(){
       backgroundColor: '#CCC'
     }
   }
+
 
 
   const nextPage = () => {
@@ -143,7 +151,7 @@ useEffect(()=>{
               <input type="text" placeholder="Buscar receta" onChange={(e) => onSearchChange(e)}  />
               <button onClick={(e) => onSearchSubmit(e)}>Buscar</button>
               <form onSubmit={(e)=> asdsa(e)} >
-                <label for="dietas">Filtrar por tipo:</label>
+                <label for="dietas" style={styles.botones}>Filtrar por tipo:</label>
                   <select id="dietas" name="dietas"  onChange={(e)=>handleDietChange(e)}>
                     <option value='All'>All</option>
                     <option id='GlutenFree' value="Gluten Free">Gluten Free</option>
@@ -158,17 +166,17 @@ useEffect(()=>{
                     <option value='Low FODMAP'>Low FODMAP</option>
                     <option value='Whole30'>Whole30</option>
                   </select>
-                <input type='submit' value='Filtrar'></input>
+                <input type='submit' value='Filtrar'  style={styles.botones}></input>
               </form>
 
-              <input type='button' value='ordenar por puntaje' onClick = {(e)=> orderHandlerScore(e)}/>
-              <input type='button' value='ordenar A-Z' onClick = {(e)=> orderHandler(e)}/>
-              <input type='button' value='ordenar Z-A' onClick = {(e)=> orderHandlerDesc(e)}/>
+              <input type='button' value='Ordenar por puntaje' onClick = {(e)=> orderHandlerScore(e)}  style={styles.botones}/>
+              <input type='button' value='Ordenar A-Z' onClick = {(e)=> orderHandler(e)}  style={styles.botones}/>
+              <input type='button' value='Ordenar Z-A' onClick = {(e)=> orderHandlerDesc(e)}  style={styles.botones}/>
             </div>
             <div style={styles.divPaginado}>
               {actualPage!==1?<img src={prevButtn} style={{maxHeight:'8vh'}} onClick={() => prevPage()} alt='control página anterior'/>: null}
               &nbsp;
-              <p>{actualPage}</p>
+              {filtrados?<p>{actualPage}</p>:null}
               &nbsp;
               {(recipes.length)/9>actualPage ?<img src={nextButtn} style={{maxHeight:'8vh'}} onClick={() => nextPage()} alt='control página siguiente'/>:null}
             </div>
@@ -179,14 +187,14 @@ useEffect(()=>{
                        <Card id={r.id} name={r.name} image ={r.image} healthScore={r.healthScore} diets={r.diets}/>
                       )
                                                 })
-              :<h1 style={{height : '60vh', color: 'white', display: 'flex', alignItems:'center', textShadow:'2px 2px 0 black'}}>No se encontraron recetas</h1>}
+              :<h1 style={{height : '58vh', color: 'white', display: 'flex', alignItems:'center', textShadow:'2px 2px 0 black'}}>No se encontraron recetas</h1>}
             </div>
 
 
             <div style={styles.divPaginado}>
               {actualPage!==1?<img src={prevButtn} style={{maxHeight:'8vh'}} onClick={() => prevPage()} alt='control página anterior'/>: null}
               &nbsp;
-              <p>{actualPage}</p>
+              {filtrados? <p>{actualPage}</p>: null}
               &nbsp;
               {(recipes.length)/9>actualPage ?<img src={nextButtn} style={{maxHeight:'8vh'}} onClick={() => nextPage()} alt='control página siguiente'/>:null}
             </div>

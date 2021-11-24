@@ -93,7 +93,7 @@ router.get('/recipes', async function(req,res){
 
 
     console.log('query: ' ,req.query)
-    var getApiCall = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${name|| ''}&number=50&addRecipeInformation=true&apiKey=${apiKeys[0]}`);
+    var getApiCall = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${name|| ''}&number=100&addRecipeInformation=true&apiKey=${apiKeys[0]}`);
   
   let array = Object.values(getApiCall.data.results);
 
@@ -116,7 +116,7 @@ router.get('/recipes', async function(req,res){
         let dbInfo = await getDatabaseInfo(name);
         const info = dbInfo.concat(apiInfo);
 
-    info ? res.json(info) : res.status(401).send('no se encontró la receta');
+    info ? res.status(200).json(info) : res.status(401).send('no se encontró la receta');
     
 }
 catch(e){

@@ -61,7 +61,12 @@ const styles = {
         maxHeight : '35vh',
         maxWidth : '35vw',
         gridColumn : '2/3',
-        gridRow : '2'
+        gridRow : '2',
+        fontFamily : 'Courier New',
+        fontSize: '80px',
+        textShadow: '2px 2px 0 black',
+        color: '#FC0',
+        textDecoration : 'none'
     }
 }
 
@@ -76,6 +81,7 @@ const styles = {
         </div>
         <Link to='/home'>
         <img src ={homeLogo} style={styles.img} alt='homeLogo'></img>
+        {/* <h1 style={styles.img}>Home</h1> */}
         </Link>
         </div>
         </div>
