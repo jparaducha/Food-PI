@@ -64,7 +64,7 @@ export const addRecipe = (payload)=>{
     console.log('addRecipe en línea 64 actions');
     return async function(dispatch){
         console.log('intenta hacer le post linea 66 actions')
-        var json = await axios.post(`http//localhost:3001/recipes`, payload);
+        const json = await axios.post(`http//localhost:3001/recipes`, payload);
 
         console.log('línea 69 actions\nhace un post con axios en:http//localhost:3001/recipes y con payload: ', payload);
 

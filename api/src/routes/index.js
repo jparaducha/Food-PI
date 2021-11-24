@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Recipe, Diet_type } = require('../db.js');
+const { Recipe, Diets } = require('../db.js');
 const crypto  = require('crypto');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -162,12 +162,12 @@ router.get('/types', async (req,res)=>{
 //     if (!types){
     for(let i = 0; i<tiposDeDietas.length;i++){
         let ele = tiposDeDietas[i];
-    await Diet_type.create({
+    await Diets.create({
         id: ele.id,
         name: ele.name
     })}
 // }
-    types = await Diet_type.findAll();
+    types = await Diets.findAll();
     
     return res.json(types);
 
@@ -175,50 +175,81 @@ router.get('/types', async (req,res)=>{
 
 
 router.post('/recipes', async (req,res)=>{
-    const {name, summary,healthScore, diets, image, dishTypes, instructions, score} = req.query;
-    if(!name || !summary) return res.send('Se necesita un name y un summary en el query');
 
-    let recipe;
-   recipe = await Recipe.findOne({
-      where : { 
-        name: name,
-        // summary: summary,
-        // diets: diets ||null,
-        // image:image|| null,
-        // dishTypes: dishTypes || null,
-        // healthScore :healthScore || null,
-        // instructions : instructions || null
-      }
-  })
-  try{
-if(!recipe){
-    recipe = await Recipe.create({
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: Sequelize.literal('uuid_generate_v4()'),
-            primaryKey: true,
-            unique: true
-        },
-        instructions :instructions || null,
-        name : name || null,
-        summary : summary || null,
-        diets : diets || null,
-        image: image || null,
-        dishTypes: dishTypes || null,
-        healthScore : healthScore || null})
 
-}else{
-    recipe.instructions = instructions || recipe.instructions;
-    recipe.summary = summary || recipe.summary;
-    recipe.diets = diets || recipe.diets;
-    recipe.image = image || recipe.image;
-    recipe.dishTypes = dishTypes || recipe.dishTypes;
-    recipe.healthScore = healthScore || recipe.healthScore;
-}}
+//     const {name, summary,healthScore, diets, image, instructions, score} = req.body;
+//     console.log('name: ', name, ' summary: ', summary)
+//     if(!name || !summary) return res.send('Se necesita un name y un summary en el query');
 
-catch(e){console.log(e)};
+//     let recipe;
+//    recipe = await Recipe.findOne({
+//       where : { 
+//         name: name,
+//         // summary: summary,
+//         // diets: diets ||null,
+//         // image:image|| null,
+//         // dishTypes: dishTypes || null,
+//         // healthScore :healthScore || null,
+//         // instructions : instructions || null
+//       }
+//   })
+//   try{
+// if(!recipe){
+//     recipe = await Recipe.create({
+//         id: {
+//             type: DataTypes.UUID,
+//             defaultValue: Sequelize.literal('uuid_generate_v4()'),
+//             primaryKey: true,
+//             unique: true
+//         },
+//         instructions :instructions || null,
+//         name : name || null,
+//         summary : summary || null,
+//         diets : diets || null,
+//         image: image || null,
+//         dishTypes: dishTypes || null,
+//         healthScore : healthScore || undefined,
+//         score : score || undefined
+//     })
 
-recipe ? res.json(recipe): res.send('no se pudo agregar ??');
+// }else{
+//     recipe.instructions = instructions || recipe.instructions;
+//     recipe.summary = summary || recipe.summary;
+//     recipe.diets = diets || recipe.diets;
+//     recipe.image = image || recipe.image;
+//     recipe.dishTypes = dishTypes || recipe.dishTypes;
+//     recipe.healthScore = healthScore || recipe.healthScore;
+//     recipe.score = score || recipe.score;
+// }
+// res.send('Se agrego')
+// }
+
+try {
+    const {name, summary, score, healthScore, instructions, image, diets} = req.body;
+    if(!diets){ diets = ['Vegan']};
+    console.log('name: ', name);
+   
+   let recipeCreated = await Recipe.create({
+        name,
+        summary,
+        points: score,
+        healthScore,
+        instructions,
+        image
+    })
+    console.log('receta creada: ',recipeCreated.dataValues.name);
+    let dietTypesDb = await Diets.findAll({
+      where: {name : diets}
+    })
+    console.log('diettypesdb ', dietTypesDb);
+    recipeCreated.addDiets(dietTypesDb)
+    res.send(`Recipe "${name}" successfully created.`)
+  }
+catch(e){
+    // console.log(e)
+    res.status(401).send(e);
+};
+
 
 })
 

@@ -20,9 +20,6 @@ module.exports = (sequelize) =>{
     dishTypes : {
       type: DataTypes.ARRAY(DataTypes.STRING),
     },
-    diets : {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-    },
     summary: {
       type: DataTypes.TEXT,
       allowNull: false
@@ -36,5 +33,5 @@ module.exports = (sequelize) =>{
     score : {
       type: DataTypes.INTEGER
     }
-  });
+  }, {timestamps: false});
 };
