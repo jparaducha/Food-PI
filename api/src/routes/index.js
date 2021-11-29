@@ -13,8 +13,6 @@ const {
     DB_USER, YOUR_API_KEY, DB_HOST,
   } = process.env;
 
-  const apiKeys = ['740456301aa641dea81fc8a540530539', '4e84d07ca9e34723a06d3748b52db7d1', YOUR_API_KEY ]
-
 const router = Router();
 
 router.use(morgan('dev'));
@@ -107,7 +105,7 @@ router.get('/recipes', async function(req,res){
     try {
     const {name, title, query} = req.query;
 
-    var getApiCall = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${name|| ''}&number=100&addRecipeInformation=true&apiKey=${apiKeys[2]}`);
+    var getApiCall = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${name|| ''}&number=100&addRecipeInformation=true&apiKey=${YOUR_API_KEY}`);
   
   let array = Object.values(getApiCall.data.results);
 
