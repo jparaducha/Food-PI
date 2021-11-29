@@ -62,6 +62,7 @@ export default function rootReducer(state=InitialState, { type, payload }){
                             details : payload
                         }
         case GET_DIET_TYPES:
+                        console.log('agrega ', payload, ' a dietTypes');
                         return {
                             ...state,
                             dietTypes : payload

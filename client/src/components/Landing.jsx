@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import homeLogo from './home-logo.png';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { getDietTypes } from '../actions';
 import {Link} from 'react-router-dom';
 import food1 from './food1.jpg';
 import food2 from './food2.jpg';

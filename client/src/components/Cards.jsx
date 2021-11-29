@@ -184,7 +184,7 @@ useEffect(()=>{
             <div style={styles.cards}>
               {filtrados ? filtrados.map((r) => {
                 return(
-                       <Card id={r.id} name={r.name} image ={r.image} healthScore={r.healthScore} diets={r.diets}/>
+                       <Card uuid={r.uuid} id={r.id} name={r.name} image ={r.image} healthScore={r.healthScore} diets={r.diets}/>
                       )
                                                 })
               :<h1 style={{height : '58vh', color: 'white', display: 'flex', alignItems:'center', textShadow:'2px 2px 0 black'}}>No se encontraron recetas</h1>}

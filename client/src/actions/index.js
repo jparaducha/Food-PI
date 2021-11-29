@@ -63,20 +63,25 @@ export const orderFunctionScore = (payload)=>{
 export const addRecipe = (payload)=>{
     console.log('addRecipe en línea 64 actions');
     return async function(dispatch){
-        console.log('intenta hacer le post linea 66 actions')
-        const json = await axios.post(`http//localhost:3001/recipes`, payload);
+        console.log('intenta hacer le post linea 66 actions');
+        try{
+        const json = await axios.post(`http://localhost:3001/recipes`, payload);
 
         console.log('línea 69 actions\nhace un post con axios en:http//localhost:3001/recipes y con payload: ', payload);
 
 
         return dispatch({type: ADD_RECIPE, payload : json.data});
+
+}
+catch(error){console.log(error)}
+
     }
 }
 
 export const getById = (payload)=>{
     return async function(dispatch){
         const fetch = await axios.get(`http://localhost:3001/recipes/${payload}`)
-    
+    console.log('despacha payload:', fetch.data);
     return dispatch({
         type: GET_BY_ID,
         payload : fetch.data
@@ -87,7 +92,6 @@ export const getById = (payload)=>{
 export const getDietTypes = ()=>{
     return async function(dispatch){
         var fetch = await axios.get(`http://localhost:3001/types`);
-
         return dispatch({
             type : GET_DIET_TYPES,
             payload : fetch.data

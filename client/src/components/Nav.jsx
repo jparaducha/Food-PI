@@ -1,15 +1,17 @@
 import React from 'react';
 import spatula from './spatula.png';
 import {Link} from 'react-router-dom';
+import foodBg from './food5.jpg';
 
 const styles = {
     div : {
         display : 'flex',
         justifyContent : 'space-between',
         alignContent: 'flex-end',
-        backgroundColor : '#CCC',
-        borderBottom : 'solid 2px #FA0',
-        borderRadius : '4px',
+        // backgroundColor : '#FC9',
+        backgroundImage : `url(${foodBg})`,
+        borderBottom : 'solid 6px #FA0',
+        borderRadius : '2px',
         minHeight : '15vh',
         fontFamily : 'helvetica'
     },
@@ -21,9 +23,11 @@ const styles = {
         textDecoration : 'none',
     },
     title : {
-        fontFamily : 'helvetica',
+        fontFamily : 'Courier New',
         color : '#D90',
-        borderRadius : '1px'
+        borderRadius : '1px',
+        textShadow : '3px 3px 0 black',
+        fontSize: '6vh'
     }
 }
 

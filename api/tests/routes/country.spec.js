@@ -2,11 +2,13 @@
 const { expect } = require('chai');
 const session = require('supertest-session');
 const app = require('../../src/app.js');
-const { Recipe, conn } = require('../../src/db.js');
+const { Recipe, Diets, conn } = require('../../src/db.js');
 
 const agent = session(app);
 const recipe = {
-  name: 'Milanea a la napolitana',
+  name: 'Milanesa a la napolitana',
+  healthScore: 10,
+  summary: "una prueba",
 };
 
 describe('Recipe routes', () => {
@@ -16,9 +18,24 @@ describe('Recipe routes', () => {
   }));
   beforeEach(() => Recipe.sync({ force: true })
     .then(() => Recipe.create(recipe)));
-  describe('GET /recipes', () => {
-    it('should get 200', () =>
-      agent.get('/recipes').expect(200)
-    );
+        
+    beforeEach(() => Diets.sync({ force: true }));
+  describe('GET /types', () => {
+    it('response should be 200', () =>{
+      return agent.get('/types').expect(200)
+  })
   });
+    it('diets should have length of 11', () =>{
+    return agent.get('/types').expect(200).then(types=>{
+    expect(types.body).to.have.lengthOf(11);
+   })
 });
+it('position 3 should be lcto ovo vegetarian', () =>{
+  return agent.get('/types').expect(200).then(types=>{
+  expect(types.body[3]).to.have.property("name").to.equal("Lacto Ovo Vegetarian")
+ })
+});
+
+});
+
+/* }); */
